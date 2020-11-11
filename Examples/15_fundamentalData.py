@@ -1,5 +1,5 @@
-# Installing (source activate tws_api):
-# Cd to: cd ~/Desktop/Darwinex/dwx-ib/darwinex-ib/TWS_API/twsapi_macunix.976.01/IBJts/source/pythonclient/
+# Installing (source activate ENVIRONMENT):
+# Cd to: cd ~/Desktop/Darwinex/darwinex-ibkr/TWS_API/twsapi_macunix.976.01/IBJts/source/pythonclient/
 # Do: python3 setup.py bdist_wheel
 # Do: python3 -m pip install --user --upgrade dist/ibapi-9.76.1-py3-none-any.whl
 
