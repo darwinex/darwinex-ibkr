@@ -7,7 +7,9 @@ from ibapi.client import EClient
 from ibapi.wrapper import EWrapper
 from ibapi.contract import Contract, ContractDetails
 import threading, logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s.%(msecs)03d %(levelname)s <> %(funcName)s: %(message)s',
+                    datefmt='%Y-%m-%d %H:%M:%S')
 
 #######################################
 
