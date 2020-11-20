@@ -24,7 +24,7 @@ TWS API Installation
 Documentation
 =============
 
-You can find the complete `TWS API documentation <https://interactivebrokers.github.io/tws-api/index.html`_ here.
+You can find the complete `TWS API documentation <https://interactivebrokers.github.io/tws-api/index.html>`_ here.
 
 Other helpful links:
 
