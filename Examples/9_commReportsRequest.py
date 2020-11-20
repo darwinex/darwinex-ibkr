@@ -32,7 +32,6 @@ class AlphaApp(EWrapper, EClient):
         '''This event is called when there is an error with the
         communication or when TWS wants to send a message to the client.'''
 
-        
         self.logger.error(f'reqId: {reqId} / Code: {errorCode} / Error String: {errorString}')
 
     def contractDetails(self, reqId: int, contractDetails: ContractDetails):
@@ -40,7 +39,6 @@ class AlphaApp(EWrapper, EClient):
         '''Receives the full contract's definitions. This method will return all
         contracts matching the requested via EEClientSocket::reqContractDetails.'''
 
-        
         self.logger.info(f'contractDetails: {contractDetails}')
 
     def openOrder(self, orderId: int, 
@@ -50,7 +48,6 @@ class AlphaApp(EWrapper, EClient):
 
         '''This function is called to feed in open orders.'''
 
-        
         self.logger.info(f'orderId: {orderId} / contract: {contract} / order: {order} / orderState: {orderState}')
 
     def orderStatus(self, orderId: int, 
@@ -68,7 +65,6 @@ class AlphaApp(EWrapper, EClient):
         '''This event is called whenever the status of an order changes. It is
         also fired after reconnecting to TWS if the client has any open orders.'''
 
-        
         self.logger.info(f'orderId: {orderId} / status: {status} / filled: {filled} / remaining: {remaining} / avgFillPrice: {avgFillPrice} / clientId: {clientId}')
 
     def execDetails(self, reqId: int, 
@@ -78,31 +74,7 @@ class AlphaApp(EWrapper, EClient):
         '''This event is fired when the reqExecutions() functions is
         invoked, or when an order is filled.'''
 
-        
         self.logger.info(f'contract: {contract} / execution: {execution}')
-
-    def position(self, account: str, 
-                       contract: Contract, 
-                       position: float,
-                       avgCost: float):
-
-        '''This event returns real-time positions for all accounts in
-        response to the reqPositions() method.'''
-
-        
-        self.logger.info(f'contract: {contract} / position: {position} / avgCost: {avgCost}')
-
-    def accountSummary(self, reqId: int, 
-                             account: str, 
-                             tag: str, 
-                             value: str,
-                             currency: str):
-
-        '''Returns the data from the TWS Account Window Summary tab in
-        response to reqAccountSummary().'''
-
-        
-        self.logger.info(f'reqId: {reqId} / account: {account} / tag: {tag} / value: {value} / currency: {currency}')
 
     def commissionReport(self, commissionReport: CommissionReport):
 
@@ -111,7 +83,6 @@ class AlphaApp(EWrapper, EClient):
         - Immediately after a trade execution.
         - By calling reqExecutions().'''
 
-        
         self.logger.info(f'commissionReport: {commissionReport}')
 
     ###########################################################
@@ -120,7 +91,6 @@ class AlphaApp(EWrapper, EClient):
 
         '''Receives next valid order id from TWS.'''
 
-        
         self._nextValidOrderId = orderId
 
         self.logger.info(f'¡Connected!')
@@ -134,22 +104,14 @@ class AlphaApp(EWrapper, EClient):
 
         # Request contract data:
         nvidiaStock = self.createUSStockContract('NVDA', primaryExchange='NASDAQ')
-        self.reqContractDetails(self.getNextValidId(), nvidiaStock)
+
+        # Create orders and place:
+        #mktOrder = self.createMarketOrder('BUY', totalQuantity=100)
+        #self.placeOrder(self.getNextValidId(), nvidiaStock, mktOrder)
 
         time.sleep(5)
 
-        # Create orders:
-        mktOrder = self.createMarketOrder('BUY', totalQuantity=100)
-        stpOrder = self.createStopOrder('SELL', totalQuantity=100, stopPrice=200.25)
-
-        # Place them:
-        self.placeOrder(self.getNextValidId(), nvidiaStock, mktOrder)
-        self.placeOrder(self.getNextValidId(), nvidiaStock, stpOrder)
-
-        time.sleep(5)
-
-        # Get commission report:
-        # Request executions and get the result back:
+        # Get commission report > Request executions and get the result back:
         execFilter = ExecutionFilter()
         execFilter.acctCode = 'DU2727647'
         execFilter.symbol = 'NVDA'
@@ -159,7 +121,6 @@ class AlphaApp(EWrapper, EClient):
 
         '''Get new request ID by incrementing previous one.'''
 
-        
         newId = self._nextValidOrderId
         self._nextValidOrderId += 1
         self.logger.info(f'NextValidOrderId: {newId}')
@@ -170,8 +131,6 @@ class AlphaApp(EWrapper, EClient):
     def createUSStockContract(self, symbol: str, primaryExchange: str):
 
         '''Create a US Stock contract placeholder.'''
-
-        
 
         contract = Contract()
         contract.symbol = symbol
@@ -187,8 +146,6 @@ class AlphaApp(EWrapper, EClient):
 
         '''Create a market order.'''
 
-        
-
         order = Order()
         order.action = action
         order.orderType = 'MKT'
@@ -200,8 +157,6 @@ class AlphaApp(EWrapper, EClient):
     def createStopOrder(self, action: str, totalQuantity: int, stopPrice: float):
 
         '''Create a market order.'''
-
-        
 
         order = Order()
         order.action = action

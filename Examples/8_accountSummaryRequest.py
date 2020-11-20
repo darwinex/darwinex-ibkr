@@ -31,65 +31,7 @@ class AlphaApp(EWrapper, EClient):
         '''This event is called when there is an error with the
         communication or when TWS wants to send a message to the client.'''
 
-        
         self.logger.error(f'reqId: {reqId} / Code: {errorCode} / Error String: {errorString}')
-
-    def contractDetails(self, reqId: int, contractDetails: ContractDetails):
-
-        '''Receives the full contract's definitions. This method will return all
-        contracts matching the requested via EEClientSocket::reqContractDetails.'''
-
-        
-        self.logger.info(f'contractDetails: {contractDetails}')
-
-    def openOrder(self, orderId: int, 
-                        contract: Contract, 
-                        order: Order,
-                        orderState: OrderState):
-
-        '''This function is called to feed in open orders.'''
-
-        
-        self.logger.info(f'orderId: {orderId} / contract: {contract} / order: {order} / orderState: {orderState}')
-
-    def orderStatus(self, orderId: int, 
-                          status: str, 
-                          filled: float,
-                          remaining: float, 
-                          avgFillPrice: float, 
-                          permId: int,
-                          parentId: int, 
-                          lastFillPrice: float, 
-                          clientId: int,
-                          whyHeld: str, 
-                          mktCapPrice: float):
-
-        '''This event is called whenever the status of an order changes. It is
-        also fired after reconnecting to TWS if the client has any open orders.'''
-
-        
-        self.logger.info(f'orderId: {orderId} / status: {status} / filled: {filled} / remaining: {remaining} / avgFillPrice: {avgFillPrice} / clientId: {clientId}')
-
-    def execDetails(self, reqId: int, 
-                          contract: Contract, 
-                          execution: Execution):
-
-        '''This event is fired when the reqExecutions() functions is
-        invoked, or when an order is filled.'''
-
-        
-        self.logger.info(f'contract: {contract} / execution: {execution}')
-
-    def position(self, account: str, 
-                       contract: Contract, 
-                       position: float,
-                       avgCost: float):
-
-        '''This event returns real-time positions for all accounts in
-        response to the reqPositions() method.'''
-
-        
-        self.logger.info(f'contract: {contract} / position: {position} / avgCost: {avgCost}')
 
     def accountSummary(self, reqId: int, 
                              account: str, 
@@ -99,9 +41,15 @@ class AlphaApp(EWrapper, EClient):
 
         '''Returns the data from the TWS Account Window Summary tab in
         response to reqAccountSummary().'''
-
         
         self.logger.info(f'reqId: {reqId} / account: {account} / tag: {tag} / value: {value} / currency: {currency}')
+
+    def accountSummaryEnd(self, reqId: int):
+
+        '''This method is called once all account summary data for a
+        given request are received.'''
+
+        self.logger.info(f'reqId: {reqId}')
 
     ###########################################################
 
@@ -109,7 +57,6 @@ class AlphaApp(EWrapper, EClient):
 
         '''Receives next valid order id from TWS.'''
 
-        
         self._nextValidOrderId = orderId
 
         self.logger.info(f'¡Connected!')
@@ -123,12 +70,12 @@ class AlphaApp(EWrapper, EClient):
 
         # Get account summary:
         self.reqAccountSummary(self.getNextValidId(), 'All', 'NetLiquidation,TotalCashValue,AvailableFunds')
+        self.reqAccountSummary()
 
     def getNextValidId(self) -> int:
 
         '''Get new request ID by incrementing previous one.'''
 
-        
         newId = self._nextValidOrderId
         self._nextValidOrderId += 1
         self.logger.info(f'NextValidOrderId: {newId}')
@@ -139,8 +86,6 @@ class AlphaApp(EWrapper, EClient):
     def createUSStockContract(self, symbol: str, primaryExchange: str):
 
         '''Create a US Stock contract placeholder.'''
-
-        
 
         contract = Contract()
         contract.symbol = symbol
@@ -156,8 +101,6 @@ class AlphaApp(EWrapper, EClient):
 
         '''Create a market order.'''
 
-        
-
         order = Order()
         order.action = action
         order.orderType = 'MKT'
@@ -169,8 +112,6 @@ class AlphaApp(EWrapper, EClient):
     def createStopOrder(self, action: str, totalQuantity: int, stopPrice: float):
 
         '''Create a market order.'''
-
-        
 
         order = Order()
         order.action = action

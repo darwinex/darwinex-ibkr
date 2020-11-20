@@ -36,6 +36,14 @@ class AlphaApp(EWrapper, EClient):
 
         self.logger.info(f'CONTRACT_DETAILS <> contractDetails: {contractDetails}')
 
+    def contractDetailsEnd(self, reqId: int):
+
+        '''This function is called once all contract details for a given
+        request are received. This helps to define the end of an option
+        chain.'''
+
+        self.logger.info(f'CONTRACT_DETAILS <> contractDetails: {reqId}')
+
     ###########################################################
 
     def nextValidId(self, orderId: int):

@@ -37,6 +37,23 @@ class AlphaApp(EWrapper, EClient):
 
         self.logger.info(f'CONTRACT_DETAILS <> contractDetails: {contractDetails}')
 
+    def orderStatus(self, orderId: int, 
+                          status: str, 
+                          filled: float,
+                          remaining: float, 
+                          avgFillPrice: float, 
+                          permId: int,
+                          parentId: int, 
+                          lastFillPrice: float, 
+                          clientId: int,
+                          whyHeld: str, 
+                          mktCapPrice: float):
+
+        '''This event is called whenever the status of an order changes. It is
+        also fired after reconnecting to TWS if the client has any open orders.'''
+
+        self.logger.info(f'orderId: {orderId} / status: {status} / filled: {filled} / remaining: {remaining} / avgFillPrice: {avgFillPrice} / clientId: {clientId}')
+
     ###########################################################
 
     def nextValidId(self, orderId: int):
@@ -53,19 +70,17 @@ class AlphaApp(EWrapper, EClient):
 
         # Call client method:
         self.reqCurrentTime()
-        self.reqPositions()
 
         # Request contract data:
         nvidiaStock = self.createUSStockContract('NVDA', primaryExchange='NASDAQ')
-        self.reqContractDetails(self.getNextValidId(), nvidiaStock)
 
         # Create orders:
         mktOrder = self.createMarketOrder('BUY', totalQuantity=100)
-        stpOrder = self.createStopOrder('SELL', totalQuantity= 100, stopPrice=200.25)
+        #stpOrder = self.createStopOrder('SELL', totalQuantity= 100, stopPrice=200.25)
 
         # Place them:
         self.placeOrder(self.getNextValidId(), nvidiaStock, mktOrder)
-        self.placeOrder(self.getNextValidId(), nvidiaStock, stpOrder)
+        #self.placeOrder(self.getNextValidId(), nvidiaStock, stpOrder)
 
     def getNextValidId(self) -> int:
 

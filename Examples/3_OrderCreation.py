@@ -57,11 +57,10 @@ class AlphaApp(EWrapper, EClient):
 
         # Request contract data:
         nvidiaStock = self.createUSStockContract('NVDA', primaryExchange='NASDAQ')
-        self.reqContractDetails(self.getNextValidId(), nvidiaStock)
 
         # Create orders:
         mktOrder = self.createMarketOrder('BUY', totalQuantity=100)
-        stpOrder = self.createStopOrder('SELL', totalQuantity= 100, stopPrice=200.25)
+        stpOrder = self.createStopOrder('SELL', totalQuantity=100, stopPrice=200.25)
 
     def getNextValidId(self) -> int:
 
