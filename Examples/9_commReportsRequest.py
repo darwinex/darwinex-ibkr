@@ -109,7 +109,7 @@ class AlphaApp(EWrapper, EClient):
         #mktOrder = self.createMarketOrder('BUY', totalQuantity=100)
         #self.placeOrder(self.getNextValidId(), nvidiaStock, mktOrder)
 
-        time.sleep(5)
+        #time.sleep(5)
 
         # Get commission report > Request executions and get the result back:
         execFilter = ExecutionFilter()

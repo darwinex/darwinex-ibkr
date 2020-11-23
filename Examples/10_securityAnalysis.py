@@ -198,12 +198,12 @@ class AlphaApp(EWrapper, EClient):
         # Get historical data:
         # Request contract data:
         nvidiaStock = self.createUSStockContract('NVDA', primaryExchange='NASDAQ')
-        #eurodollarPair = self.createFXPairContract('EURUSD')
+
         self.historicalDataContainer = []
         self.reqHistoricalData(reqId=self.getNextValidId(), 
-                               contract=nvidiaStock, # eurodollarPair
+                               contract=nvidiaStock,
                                endDateTime='20200903 18:00:00',
-                               durationStr='1 D', 
+                               durationStr='5 D', 
                                barSizeSetting='30 mins', 
                                whatToShow='BID',
                                useRTH=0, 

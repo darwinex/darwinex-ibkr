@@ -84,14 +84,6 @@ class AlphaApp(EWrapper, EClient):
         # Request contract data:
         nvidiaStock = self.createUSStockContract('NVDA', primaryExchange='NASDAQ')
 
-        # Create orders:
-        stpOrder = self.createStopOrder('SELL', totalQuantity=100, stopPrice=200.25)
-
-        # Place it:
-        self.placeOrder(self.getNextValidId(), nvidiaStock, stpOrder)
-
-        time.sleep(5)
-
         # Request openOrders and get the result back:
         self.reqOpenOrders()
 

@@ -70,7 +70,6 @@ class AlphaApp(EWrapper, EClient):
 
         # Get account summary:
         self.reqAccountSummary(self.getNextValidId(), 'All', 'NetLiquidation,TotalCashValue,AvailableFunds')
-        self.reqAccountSummary()
 
     def getNextValidId(self) -> int:
 

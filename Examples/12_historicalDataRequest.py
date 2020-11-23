@@ -91,7 +91,7 @@ class AlphaApp(EWrapper, EClient):
         # Request contract data:
         nvidiaStock = self.createUSStockContract('NVDA', primaryExchange='NASDAQ')
         self.reqHistoricalData(reqId=self.getNextValidId(), 
-                               contract=eurodollarPair, 
+                               contract=nvidiaStock, 
                                endDateTime='20200903 18:00:00',
                                durationStr='5 D', 
                                barSizeSetting='30 mins', 

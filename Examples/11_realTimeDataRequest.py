@@ -149,16 +149,16 @@ class AlphaApp(EWrapper, EClient):
         nvidiaStock = self.createUSStockContract('NVDA', primaryExchange='NASDAQ')
 
         # "Real-time" watchlist data:
-        #self.createMktDataRequest(eurodollarPair)
+        #self.createMktDataRequest(nvidiaStock)
 
         # Real-time tick-by-tick data:
-        #self.createTickByTickDataRequest(eurodollarPair)
+        #self.createTickByTickDataRequest(nvidiaStock)
 
         # Real-time market depth data:
         #self.createMktDepthDataRequest(nvidiaStock)
 
         # Real-time 5s bar data:
-        self.createRealTimeBarsRequest(eurodollarPair)
+        self.createRealTimeBarsRequest(nvidiaStock)
 
     def getNextValidId(self) -> int:
 
